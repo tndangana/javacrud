@@ -1,0 +1,84 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'org.asciidoctor.convert' version '1.5.8'
+    id 'java'
+}
+
+group = 'zw.co.test'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('snippetsDir', file("build/generated-snippets"))
+    set('springBootAdminVersion', "2.2.1")
+}
+
+dependencies {
+//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+//    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+//    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+//    implementation 'org.springframework.boot:spring-boot-starter-mail'
+//    implementation 'org.springframework.boot:spring-boot-starter-quartz'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-web-services'
+    implementation 'de.codecentric:spring-boot-admin-starter-server'
+    // https://mvnrepository.com/artifact/com.graphql-java/graphql-java-tools
+   // compile group: 'com.graphql-java', name: 'graphql-java-tools', version: '5.2.4'
+    // https://mvnrepository.com/artifact/com.graphql-java/graphql-java-tools
+   // compile group: 'com.graphql-java', name: 'graphql-java-tools', version: '5.2.4'
+    // https://mvnrepository.com/artifact/com.graphql-java/graphql-spring-boot-starter
+   // compile group: 'com.graphql-java', name: 'graphql-spring-boot-starter', version: '5.0.2'
+    // https://mvnrepository.com/artifact/com.graphql-java/graphiql-spring-boot-starter
+   // compile group: 'com.graphql-java', name: 'graphiql-spring-boot-starter', version: '5.0.2'
+
+
+
+
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'mysql:mysql-connector-java'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
+    }
+}
+
+test {
+    outputs.dir snippetsDir
+    useJUnitPlatform()
+}
+
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test
+}
