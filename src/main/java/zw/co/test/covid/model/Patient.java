@@ -12,7 +12,7 @@ public class Patient extends BaseId {
     private String firstName;
     private String lastName;
     private Date dateOfBirth;
-//    private Gender gender;
+    private Gender gender;
 
 
 }

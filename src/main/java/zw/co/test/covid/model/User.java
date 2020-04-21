@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,8 +16,11 @@ import java.util.Set;
 @NoArgsConstructor
 public class User extends BaseId{
 
+    @NotBlank
     private String firstName;
     private String lastName;
+    @Email
+    @NotBlank
     private String email;
     private Boolean verified = Boolean.FALSE;
     private String mobileNumber;
