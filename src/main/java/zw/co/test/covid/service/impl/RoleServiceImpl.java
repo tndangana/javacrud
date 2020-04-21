@@ -38,4 +38,9 @@ public class RoleServiceImpl implements RoleService {
     public void deleteByObject(Role role) {
        roleRepository.delete(role);
     }
+
+    @Override
+    public Optional<Role> findByRoleName(String enumRole) {
+        return Optional.ofNullable(roleRepository.findByRoleName(enumRole).get());
+    }
 }

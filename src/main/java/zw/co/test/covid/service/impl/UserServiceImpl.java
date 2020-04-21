@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import zw.co.test.covid.model.User;
 import zw.co.test.covid.repository.UserRepsository;
+import zw.co.test.covid.service.TokenService;
 import zw.co.test.covid.service.UserService;
 
 import java.util.List;
@@ -16,7 +17,8 @@ public class UserServiceImpl implements UserService  {
     private UserRepsository userRepsository;
 
     @Override
-    public User save(User user) {
+    public User save(User user)
+    {
         return userRepsository.save(user);
     }
 
@@ -37,7 +39,7 @@ public class UserServiceImpl implements UserService  {
 
     @Override
     public void deleteByObject(User user) {
-
+          userRepsository.delete(user);
     }
 
     @Override

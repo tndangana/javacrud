@@ -40,4 +40,9 @@ public class SymptomServiceImpl implements SymptomService {
     public void deleteByObject(Symptom symptom) {
          symptomRepository.delete(symptom);
     }
+
+    @Override
+    public Symptom findByName(String name) {
+        return symptomRepository.findByName(name);
+    }
 }

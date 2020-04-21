@@ -1,5 +1,6 @@
 package zw.co.test.covid.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import zw.co.test.covid.model.Covidtest;
 import zw.co.test.covid.repository.Covidtestrepository;
@@ -11,6 +12,7 @@ import java.util.Optional;
 @Service
 public class CovidTestServiceImpl implements CovidTestService {
 
+    @Autowired
     private Covidtestrepository covidtestrepository;
 
     @Override
