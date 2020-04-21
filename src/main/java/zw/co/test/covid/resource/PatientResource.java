@@ -1,10 +1,11 @@
 package zw.co.test.covid.resource;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import zw.co.test.covid.exception.ResourceNotFoundException;
+import zw.co.test.covid.exception.ApiRequestException;
 import zw.co.test.covid.model.Patient;
 import zw.co.test.covid.service.PatientService;
 
@@ -22,7 +23,7 @@ public class PatientResource {
     public ResponseEntity<Patient> create(@Valid @RequestBody Patient patient) throws ResourceNotFoundException {
 
         if(patient.equals(null) || patient.equals("")){
-          throw  new ResourceNotFoundException("Patient should not be empty",null,null);
+          throw  new ResourceNotFoundException("Patient should not be empty");
         }
 
          return new ResponseEntity<>(patientService.save(patient),HttpStatus.OK);
@@ -33,7 +34,7 @@ public class PatientResource {
     public ResponseEntity update(@RequestBody Patient patient, @PathVariable String id) throws ResourceNotFoundException {
         Optional<Patient> optionalPatient = Optional.of(patientService.findOne(id).get());
 
-        optionalPatient.orElseThrow(() -> new ResourceNotFoundException("Patient with id" +id+ "" + "not found !!",null,null) );
+        optionalPatient.orElseThrow(() -> new ResourceNotFoundException("Patient should not be empty") );
         optionalPatient.get().setDateOfBirth(patient.getDateOfBirth());
         optionalPatient.get().setFirstName(patient.getFirstName());
 //        optionalPatient.get().setGender(patient.getGender());
@@ -43,10 +44,18 @@ public class PatientResource {
 
     }
     @GetMapping("/{id}")
-    public ResponseEntity findOne(@PathVariable String id) throws ResourceNotFoundException {
-        Patient patient = patientService.findOne(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Patient with id" +id+ "" + "not found !!",null,null));
-        return ResponseEntity.ok().body(patient);
+    public ResponseEntity findOne(@PathVariable String id) {
+        try{
+            Optional<Patient> patient = Optional.of(patientService.findOne(id).get());
+            if(!patient.isPresent()){
+                throw  new ApiRequestException("Testing 123");
+            }
+            return ResponseEntity.ok().body(patient);
+
+        }catch (ApiRequestException e){
+            throw  new ApiRequestException("Testing 123");
+        }
+
 
     }
 

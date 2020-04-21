@@ -2,9 +2,10 @@ package zw.co.test.covid.resource;
 
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import zw.co.test.covid.exception.ResourceNotFoundException;
+import zw.co.test.covid.exception.ApiRequestException;
 import zw.co.test.covid.model.Country;
 import zw.co.test.covid.service.CountryService;
 
@@ -46,7 +47,7 @@ public class CountryResource {
     @GetMapping("/{id}")
     public ResponseEntity findOne(@PathVariable String id){
         Country country = countryService.findOne(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Country not found",null,null));
+                .orElseThrow(()-> new ApiRequestException("Testing to see if actually works"));
            return ResponseEntity.ok(country);
     }
 

@@ -24,7 +24,6 @@ public class RoleResource {
         return ResponseEntity
                 .status(201)
                 .body(roleService.save(role));
-
     }
 
     @PutMapping("/{id}")

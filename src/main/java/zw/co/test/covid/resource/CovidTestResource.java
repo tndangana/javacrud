@@ -1,9 +1,9 @@
 package zw.co.test.covid.resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import zw.co.test.covid.exception.ResourceNotFoundException;
 import zw.co.test.covid.model.Covidtest;
 import zw.co.test.covid.model.Symptom;
 import zw.co.test.covid.service.CovidTestService;
@@ -72,7 +72,7 @@ public class CovidTestResource {
     public ResponseEntity findOne(@PathVariable String id) throws ResourceNotFoundException {
         Optional<Covidtest> covidtest = Optional.of(covidTestService.findOne(id).get());
         covidtest
-                .orElseThrow(() -> new ResourceNotFoundException("Covid Test not found",null,null));
+                .orElseThrow(() -> new ResourceNotFoundException("Covid Test not found"));
         return  ResponseEntity.ok(covidtest);
     }
 
